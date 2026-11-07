@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Special Flower for Kerby 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#ffc8dd; --pink2:#ffafcc; --blue:#bde0fe; --blue2:#a2d2ff;
+  --yellow:#ffe66d; --green:#b5e48c; --green2:#76c893; --ink:#7a4e6d;
+  --bg1:#fff0f6; --bg2:#e3f2ff; --card:#ffffffee;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg1:#3b2540; --bg2:#1f2a4a; --ink:#ffd9ec; --card:#4a2f55ee; }
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{
+  margin:0;height:100%;overflow:hidden;
+  font-family:'Quicksand',system-ui,sans-serif;color:var(--ink);
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.bg-heart{position:fixed;bottom:-40px;font-size:24px;opacity:.7;animation:floatUp linear infinite;pointer-events:none;z-index:0}
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(0);opacity:0}
+  10%{opacity:.8}
+  50%{transform:translateY(-55vh) translateX(25px) rotate(15deg)}
+  100%{transform:translateY(-115vh) translateX(-20px) rotate(-15deg);opacity:0}
+}
+.title{
+  position:relative;z-index:2;text-align:center;margin:0 16px 4px;
+  font-family:'Pacifico',cursive;font-weight:400;
+  font-size:clamp(34px,8vw,64px);line-height:1.15;
+  color:#ff7eb6;text-shadow:0 3px 0 #fff,0 0 22px rgba(255,175,204,.9);
+  animation:titleBob 3s ease-in-out infinite;
+}
+.sub{position:relative;z-index:2;margin:0 16px 6px;font-weight:700;font-size:clamp(14px,3.5vw,18px);opacity:.85;text-align:center}
+@keyframes titleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+.garden{position:relative;z-index:2;width:min(86vw,340px);aspect-ratio:3/4;cursor:pointer}
+.sway{width:100%;height:100%;transform-origin:50% 100%;animation:sway 4s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.garden.happy .sway{animation:none}
+.garden.happy .bloom{animation:jumpSpin .9s cubic-bezier(.3,1.6,.5,1)}
+@keyframes jumpSpin{
+  0%{transform:translateY(0) rotate(0) scale(1)}
+  35%{transform:translateY(-60px) rotate(180deg) scale(1.2)}
+  70%{transform:translateY(-20px) rotate(330deg) scale(1.1)}
+  100%{transform:translateY(0) rotate(360deg) scale(1)}
+}
+svg{width:100%;height:100%;overflow:visible}
+.petal{fill:var(--pink2);stroke:#fff;stroke-width:3;transform-box:fill-box;transform-origin:50% 100%;
+  animation:petalBounce 2.4s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(255,175,204,.9))}
+.pw:nth-child(even) .petal{fill:var(--pink)}
+.pw:nth-child(1) .petal{animation-delay:0s}.pw:nth-child(2) .petal{animation-delay:.15s}
+.pw:nth-child(3) .petal{animation-delay:.3s}.pw:nth-child(4) .petal{animation-delay:.45s}
+.pw:nth-child(5) .petal{animation-delay:.6s}.pw:nth-child(6) .petal{animation-delay:.75s}
+.pw:nth-child(7) .petal{animation-delay:.9s}.pw:nth-child(8) .petal{animation-delay:1.05s}
+@keyframes petalBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+.glow{animation:glow 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes glow{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.75;transform:scale(1.12)}}
+.eye{animation:blink 4s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.leaf{fill:var(--green);stroke:#fff;stroke-width:3}
+
+.hint{position:relative;z-index:2;margin-top:6px;font-weight:700;font-size:15px;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+
+.confetti{position:fixed;z-index:5;pointer-events:none;font-size:22px;will-change:transform,opacity}
+
+.overlay{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;
+  background:rgba(255,200,221,.35);backdrop-filter:blur(4px);padding:20px}
+.overlay.show{display:flex}
+.popup{
+  position:relative;max-width:360px;width:100%;text-align:center;padding:30px 24px 24px;border-radius:30px;
+  background:var(--card);border:4px solid var(--pink2);box-shadow:0 12px 40px rgba(255,126,182,.4);
+  animation:pop .5s cubic-bezier(.3,1.7,.5,1)
+}
+@keyframes pop{from{transform:scale(.3) rotate(-8deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.popup .big{font-size:46px;animation:pulse 1.4s infinite}
+.popup h2{font-family:'Pacifico',cursive;font-weight:400;margin:6px 0 10px;color:#ff7eb6;font-size:26px}
+.popup p{margin:0 0 18px;font-size:18px;line-height:1.5;font-weight:700}
+.popup button{
+  font-family:inherit;font-weight:700;font-size:16px;border:0;border-radius:999px;padding:12px 26px;cursor:pointer;
+  background:linear-gradient(135deg,var(--pink2),var(--blue2));color:#fff;box-shadow:0 5px 0 #e58ab0;
+}
+.popup button:active{transform:translateY(3px);box-shadow:0 2px 0 #e58ab0}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+
+<h1 class="title">A Special Flower<br>for Kerby 💕</h1>
+<p class="sub">Made with love, just for you 🌸</p>
+
+<div class="garden" id="garden" role="button" tabindex="0" aria-label="Tap the flower">
+  <div class="sway">
+    <svg viewBox="0 0 300 400">
+      <!-- stem and leaves -->
+      <path d="M150 210 C140 270 160 330 150 395" stroke="#76c893" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <path class="leaf" d="M148 320 C100 330 70 300 62 270 C105 268 140 285 148 320Z"/>
+      <path class="leaf" d="M152 290 C200 295 232 265 240 235 C195 235 160 255 152 290Z"/>
+      <g class="bloom" style="transform-box:fill-box;transform-origin:50% 50%">
+        <circle class="glow" cx="150" cy="135" r="105" fill="#ffe0ef"/>
+        <g id="petals" transform="translate(150 135)">
+          <g class="pw" transform="rotate(0)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+          <g class="pw" transform="rotate(45)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+          <g class="pw" transform="rotate(90)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+          <g class="pw" transform="rotate(135)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+          <g class="pw" transform="rotate(180)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+          <g class="pw" transform="rotate(225)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+          <g class="pw" transform="rotate(270)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+          <g class="pw" transform="rotate(315)"><ellipse class="petal" cx="0" cy="-58" rx="30" ry="42"/></g>
+        </g>
+        <!-- face -->
+        <circle cx="150" cy="135" r="48" fill="#ffe66d" stroke="#fff" stroke-width="4"/>
+        <ellipse class="eye" cx="133" cy="128" rx="6" ry="8" fill="#7a4e6d"/>
+        <ellipse class="eye" cx="167" cy="128" rx="6" ry="8" fill="#7a4e6d"/>
+        <circle cx="135" cy="125" r="2" fill="#fff"/><circle cx="169" cy="125" r="2" fill="#fff"/>
+        <ellipse cx="119" cy="146" rx="9" ry="6" fill="#ffafcc" opacity=".8"/>
+        <ellipse cx="181" cy="146" rx="9" ry="6" fill="#ffafcc" opacity=".8"/>
+        <path d="M137 142 Q150 160 163 142" stroke="#7a4e6d" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
+</div>
+<p class="hint">Tap the flower 👆</p>
+
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <div class="big">💖</div>
+    <h2>Hi Kerby!</h2>
+    <p id="msg"></p>
+    <button id="close">Aww, thank you 🥰</button>
+  </div>
+</div>
+
+<script>
+const messages = [
+  "You make every ordinary day feel like spring. I love you so much! 🌷",
+  "Just like this flower, you make my whole world brighter and sweeter. 💕",
+  "You are my favorite person, my cozy place, and my happy thought. 🌸",
+  "If I could, I would give you a whole garden. For now, this flower is all yours! 🌼",
+  "Thank you for being you. My heart blooms every time I think of you. 💗"
+];
+const heartEmojis = ["💖","💕","💗","🌸","💛","💙","✨","🌷"];
+const colors = ["💖","💕","💗","💛","💙"];
+
+// floating background hearts
+for (let i = 0; i < 22; i++) {
+  const h = document.createElement('div');
+  h.className = 'bg-heart';
+  h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+  h.style.left = Math.random() * 100 + 'vw';
+  h.style.fontSize = (16 + Math.random() * 26) + 'px';
+  h.style.animationDuration = (9 + Math.random() * 10) + 's';
+  h.style.animationDelay = (-Math.random() * 15) + 's';
+  document.body.appendChild(h);
+}
+
+const garden = document.getElementById('garden');
+const overlay = document.getElementById('overlay');
+const msg = document.getElementById('msg');
+let msgIndex = 0;
+
+function burst() {
+  const r = garden.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height * 0.34;
+  for (let i = 0; i < 36; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.textContent = colors[Math.floor(Math.random() * colors.length)];
+    c.style.left = cx + 'px'; c.style.top = cy + 'px';
+    c.style.fontSize = (16 + Math.random() * 20) + 'px';
+    document.body.appendChild(c);
+    const a = Math.random() * Math.PI * 2, d = 90 + Math.random() * 190;
+    const dx = Math.cos(a) * d, dy = Math.sin(a) * d - 60;
+    c.animate([
+      { transform: 'translate(0,0) scale(.3) rotate(0)', opacity: 1 },
+      { transform: `translate(${dx}px,${dy}px) scale(1.2) rotate(${Math.random()*360}deg)`, opacity: 1, offset: .6 },
+      { transform: `translate(${dx*1.1}px,${dy+160}px) scale(.8) rotate(${Math.random()*540}deg)`, opacity: 0 }
+    ], { duration: 1400 + Math.random() * 700, easing: 'cubic-bezier(.2,.7,.4,1)' }).onfinish = () => c.remove();
+  }
+}
+
+function celebrate() {
+  garden.classList.remove('happy');
+  void garden.offsetWidth;
+  garden.classList.add('happy');
+  burst();
+  setTimeout(() => {
+    msg.textContent = messages[msgIndex++ % messages.length];
+    overlay.classList.add('show');
+  }, 700);
+  setTimeout(() => garden.classList.remove('happy'), 1000);
+}
+
+garden.addEventListener('click', celebrate);
+garden.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); celebrate(); } });
+document.getElementById('close').addEventListener('click', () => overlay.classList.remove('show'));
+overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
+</script>
+</body>
+</html>
